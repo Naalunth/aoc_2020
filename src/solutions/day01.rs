@@ -1,18 +1,16 @@
 use aoc_runner_derive::{aoc, aoc_generator};
 use fnv::FnvHashSet;
+use anyhow::Context;
 
 type GeneratorOutput = Vec<u32>;
 type PartInput = [u32];
 
 #[aoc_generator(day1)]
 pub fn generator(input: &[u8]) -> anyhow::Result<GeneratorOutput> {
-    use crate::util::parsers::unsigned_number;
-    use nom::{bytes::complete::tag, combinator::all_consuming, multi::separated_list0};
-    Ok(
-        all_consuming(separated_list0(tag(b"\n"), unsigned_number::<u32>))(input)
-            .map_err(|e| e.map(|e| (e.input, e.code)).to_owned())?
-            .1,
-    )
+    input.split(|b| *b == b'\n')
+        .map(|string| btoi::btou(string))
+        .collect::<Result<_, _>>()
+        .context("parser error")
 }
 
 #[aoc(day1, part1, naive)]
@@ -58,7 +56,8 @@ pub fn part_1_single(input: &PartInput) -> u32 {
 #[aoc(day1, part1, single_pass_array)]
 pub fn part_1_single_array(input: &PartInput) -> u32 {
     let mut flags = [false; 2020];
-    for x in input {
+    flags[input[0] as usize] = true;
+    for x in &input[1..] {
         let comp = 2020 - x;
         if flags[comp as usize] {
             return x * comp;
@@ -71,7 +70,8 @@ pub fn part_1_single_array(input: &PartInput) -> u32 {
 #[aoc(day1, part2, one_pass_less)]
 pub fn part_2_one_pass_less(input: &PartInput) -> u32 {
     let mut flags = [false; 2020];
-    for (idx, a) in input.iter().enumerate() {
+    flags[input[0] as usize] = true;
+    for (idx, a) in input[1..].iter().enumerate() {
         for b in &input[idx + 1..] {
             if a + b <= 2020 {
                 let comp = 2020 - (a + b);
