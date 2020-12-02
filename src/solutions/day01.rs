@@ -1,13 +1,14 @@
+use anyhow::Context;
 use aoc_runner_derive::{aoc, aoc_generator};
 use fnv::FnvHashSet;
-use anyhow::Context;
 
 type GeneratorOutput = Vec<u32>;
 type PartInput = [u32];
 
 #[aoc_generator(day1)]
 pub fn generator(input: &[u8]) -> anyhow::Result<GeneratorOutput> {
-    input.split(|b| *b == b'\n')
+    input
+        .split(|b| *b == b'\n')
         .map(|string| btoi::btou(string))
         .collect::<Result<_, _>>()
         .context("parser error")
@@ -51,7 +52,6 @@ pub fn part_1_single(input: &PartInput) -> u32 {
     }
     unreachable!()
 }
-
 
 #[aoc(day1, part1, single_pass_array)]
 pub fn part_1_single_array(input: &PartInput) -> u32 {

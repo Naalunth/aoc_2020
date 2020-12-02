@@ -44,6 +44,7 @@ dependencies = [
  "aoc-runner-derive",
  "bstr",
  "btoi",
+ "bytecount",
  "fnv",
  "itertools",
  "nalgebra",
@@ -111,6 +112,12 @@ checksum = "97c0869a9faa81f8bbf8102371105d6d0a7b79167a04c340b04ab16892246a11"
 dependencies = [
  "num-traits",
 ]
+
+[[package]]
+name = "bytecount"
+version = "0.6.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "72feb31ffc86498dacdbd0fcebb56138e7177a8cc5cea4516031d15ae85a742e"
 
 [[package]]
 name = "byteorder"
