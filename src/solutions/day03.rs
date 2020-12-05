@@ -35,14 +35,14 @@ pub fn part_1(input: &PartInput) -> usize {
     count_trees(input, 1, 3)
 }
 
-fn count_trees(map: &Array2<MapElement>, down: usize, right: usize) -> usize {
+pub fn count_trees(map: &Array2<MapElement>, down: usize, right: usize) -> usize {
     let height = map.nrows();
     let width = map.ncols();
 
-    successors(Some((0, 0)), |&(y, x)| {
-        Some((y + down, (x + right) % width))
+    successors(Some((0, 0)), |&(y, x)| match y + down {
+        y if y < height => Some((y, (x + right) % width)),
+        _ => None,
     })
-    .take_while(|&(y, _)| y < height)
     .map(|c| map[c] as usize)
     .sum()
 }
@@ -52,5 +52,5 @@ pub fn part_2(input: &PartInput) -> u128 {
     [(1, 1), (1, 3), (1, 5), (1, 7), (2, 1)]
         .iter()
         .map(|&(down, right)| count_trees(input, down, right) as u128)
-        .product::<u128>()
+        .product()
 }

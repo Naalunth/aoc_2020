@@ -51,15 +51,15 @@ pub fn part_2(input: &PartInput) -> usize {
 
 fn is_passport_valid(passport: &Passport) -> bool {
     match passport.get("byr").and_then(|byr| byr.parse::<u32>().ok()) {
-        Some(birth_year) if birth_year >= 1920 && birth_year <= 2002 => {}
+        Some(birth_year) if (1920..=2002).contains(&birth_year) => {}
         _ => return false,
     }
     match passport.get("iyr").and_then(|iyr| iyr.parse::<u32>().ok()) {
-        Some(issue_year) if issue_year >= 2010 && issue_year <= 2020 => {}
+        Some(issue_year) if (2010..=2020).contains(&issue_year) => {}
         _ => return false,
     }
     match passport.get("eyr").and_then(|eyr| eyr.parse::<u32>().ok()) {
-        Some(expiration_year) if expiration_year >= 2020 && expiration_year <= 2030 => {}
+        Some(expiration_year) if (2020..=2030).contains(&expiration_year) => {}
         _ => return false,
     }
     match passport
@@ -67,8 +67,8 @@ fn is_passport_valid(passport: &Passport) -> bool {
         .and_then(|hgt| parse_height(hgt).ok())
         .map(|(_, v)| v)
     {
-        Some((height, HeightUnit::Centimeters)) if height >= 150 && height <= 193 => {}
-        Some((height, HeightUnit::Inches)) if height >= 59 && height <= 76 => {}
+        Some((height, HeightUnit::Centimeters)) if (150..=193).contains(&height) => {}
+        Some((height, HeightUnit::Inches)) if (59..=76).contains(&height) => {}
         _ => return false,
     }
     match passport
@@ -87,7 +87,7 @@ fn is_passport_valid(passport: &Passport) -> bool {
         Some(pid) if pid.len() == 9 && pid.chars().all(|c| c.is_ascii_digit()) => {}
         _ => return false,
     }
-    return true;
+    true
 }
 
 #[derive(Copy, Clone, Eq, PartialEq, Debug)]
