@@ -1,3 +1,5 @@
+#![feature(unchecked_math)]
+
 mod util;
 pub mod solutions {
     pub mod day01;

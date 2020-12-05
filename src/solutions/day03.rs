@@ -1,6 +1,6 @@
 use anyhow::Context;
 use aoc_runner_derive::{aoc, aoc_generator};
-use bstr::ByteSlice;
+use memchr::memchr;
 use ndarray::{Array, Array2};
 use std::iter::successors;
 
@@ -17,7 +17,7 @@ pub enum MapElement {
 #[aoc_generator(day3)]
 pub fn generator(input: &[u8]) -> anyhow::Result<GeneratorOutput> {
     let height = bytecount::count(input, b'\n') + 1;
-    let width = input.find_byte(b'\n').unwrap();
+    let width = memchr(b'\n', input).unwrap();
     input
         .iter()
         .filter_map(|&c| match c {

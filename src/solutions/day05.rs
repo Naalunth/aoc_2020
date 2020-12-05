@@ -1,4 +1,5 @@
 use aoc_runner_derive::aoc;
+use std::hint::unreachable_unchecked;
 
 #[aoc(day5, part1)]
 pub fn part_1(input: &[u8]) -> u16 {
@@ -10,21 +11,31 @@ fn parse_input(input: &[u8]) -> impl Iterator<Item = u16> + '_ {
 }
 
 fn id(seat: &[u8]) -> u16 {
+    debug_assert!(seat.len() == 10);
+    if seat.len() != 10 {
+        unsafe { unreachable_unchecked() }
+    }
     let mut id = 0u16;
     for letter in seat.iter().take(7) {
-        id <<= 1;
+        unsafe { id = id.unchecked_add(id) }
         id += match letter {
-            b'F' => 0,
+            b'F' => 0u16,
             b'B' => 1,
-            _ => unreachable!(),
+            _ => {
+                debug_assert!(false);
+                unsafe { unreachable_unchecked() }
+            }
         };
     }
     for letter in seat.iter().skip(7).take(3) {
-        id <<= 1;
+        unsafe { id = id.unchecked_add(id) }
         id += match letter {
-            b'L' => 0,
+            b'L' => 0u16,
             b'R' => 1,
-            _ => unreachable!(),
+            _ => {
+                debug_assert!(false);
+                unsafe { unreachable_unchecked() }
+            }
         };
     }
     id
