@@ -9,7 +9,9 @@ type PartInput = [Passport];
 #[aoc_generator(day4)]
 pub fn generator(input: &str) -> anyhow::Result<GeneratorOutput> {
     use nom::{
-        branch::alt, bytes::complete::tag, combinator::all_consuming, combinator::map,
+        branch::alt,
+        bytes::complete::tag,
+        combinator::{all_consuming, map},
         multi::separated_list1,
     };
     Ok(all_consuming(separated_list1(
@@ -99,8 +101,7 @@ enum HeightUnit {
 fn parse_height(input: &str) -> IResult<&str, (u32, HeightUnit)> {
     use nom::{
         branch::alt,
-        bytes::complete::tag,
-        bytes::complete::take_while,
+        bytes::complete::{tag, take_while},
         combinator::{map, value},
     };
     let (input, number) = map(take_while(|c: char| c.is_ascii_digit()), |s: &str| {
@@ -115,7 +116,10 @@ fn parse_height(input: &str) -> IResult<&str, (u32, HeightUnit)> {
 }
 
 fn parse_color_code(input: &str) -> IResult<&str, (u8, u8, u8)> {
-    use nom::{bytes::complete::tag, bytes::complete::take_while_m_n, combinator::map};
+    use nom::{
+        bytes::complete::{tag, take_while_m_n},
+        combinator::map,
+    };
 
     let (input, _) = tag("#")(input)?;
     let mut byte_parser = map(
