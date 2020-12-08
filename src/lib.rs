@@ -9,6 +9,7 @@ pub mod solutions {
     pub mod day05;
     pub mod day06;
     pub mod day07;
+    pub mod day08;
 }
 
 aoc_runner_derive::aoc_lib! { year = 2020 }
