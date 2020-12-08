@@ -58,7 +58,7 @@ pub fn part_2(input: &PartInput) -> i64 {
         if code[idx].op != Operation::Acc {
             swap_op(&mut code[idx].op);
             match run_code(&code) {
-                RunResult::InfiniteLoop(_) => {
+                RunResult::InfiniteLoop(_) | RunResult::Error => {
                     swap_op(&mut code[idx].op);
                 }
                 RunResult::Terminated(result) => {
@@ -73,6 +73,7 @@ pub fn part_2(input: &PartInput) -> i64 {
 enum RunResult {
     InfiniteLoop(i64),
     Terminated(i64),
+    Error,
 }
 
 fn run_code(input: &[Instruction]) -> RunResult {
@@ -83,6 +84,9 @@ fn run_code(input: &[Instruction]) -> RunResult {
     loop {
         if pc == input.len() {
             return RunResult::Terminated(acc);
+        }
+        if pc > input.len() {
+            return RunResult::Error;
         }
         if replace(&mut has_visited_line_before[pc], true) {
             return RunResult::InfiniteLoop(acc);
