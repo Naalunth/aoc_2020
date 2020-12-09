@@ -1,7 +1,7 @@
 use anyhow::Context;
 use aoc_runner_derive::{aoc, aoc_generator};
 use itertools::Itertools;
-use nom::lib::std::cmp::Ordering;
+use std::cmp::Ordering;
 
 type GeneratorOutput = Vec<u64>;
 type PartInput = [u64];
