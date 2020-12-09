@@ -98,7 +98,7 @@ fn run_code(input: &[Instruction]) -> RunResult {
                 pc += 1;
             }
             Operation::Jmp => {
-                pc += instruction.arg as usize;
+                pc = pc.wrapping_add(instruction.arg as usize);
             }
             Operation::Nop => {
                 pc += 1;
