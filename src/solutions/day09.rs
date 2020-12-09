@@ -1,6 +1,7 @@
 use anyhow::Context;
 use aoc_runner_derive::{aoc, aoc_generator};
-use itertools::{Itertools, MinMaxResult};
+use itertools::Itertools;
+use nom::lib::std::cmp::Ordering;
 
 type GeneratorOutput = Vec<u64>;
 type PartInput = [u64];
@@ -42,21 +43,44 @@ pub fn part_2(input: &PartInput) -> u64 {
             .last()
         {
             if sum == target {
-                match input[base_idx..=end_idx].iter().minmax() {
-                    MinMaxResult::NoElements => {
-                        unreachable!()
-                    }
-                    MinMaxResult::OneElement(x) => {
-                        return x + x;
-                    }
-                    MinMaxResult::MinMax(min, max) => {
-                        return min + max;
-                    }
-                }
+                return min_max_sum(&input[base_idx..=end_idx]);
             }
         }
     }
     unreachable!()
+}
+
+#[aoc(day9, part2, sliding_window)]
+pub fn part_2_sliding_window(input: &PartInput) -> u64 {
+    let target = part_1(input);
+    let mut window_size = 0usize;
+    let mut previous_ordering = Ordering::Less;
+    let mut base_idx = 0;
+    let mut sum = 0u64;
+    loop {
+        match previous_ordering {
+            Ordering::Equal => break,
+            Ordering::Less => {
+                sum += input[base_idx + window_size];
+                window_size += 1;
+            }
+            Ordering::Greater => {
+                sum -= input[base_idx + window_size - 1];
+                window_size -= 1;
+            }
+        }
+        match sum.cmp(&target) {
+            Ordering::Equal => break,
+            new_ordering if new_ordering == previous_ordering => {}
+            _ => {
+                sum -= input[base_idx];
+                sum += input[base_idx + window_size];
+                base_idx += 1;
+                previous_ordering = sum.cmp(&target);
+            }
+        }
+    }
+    min_max_sum(&input[base_idx..(base_idx + window_size)])
 }
 
 fn is_sum_of_two(number: u64, others: &[u64]) -> bool {
@@ -68,4 +92,9 @@ fn is_sum_of_two(number: u64, others: &[u64]) -> bool {
         }
     }
     false
+}
+
+fn min_max_sum(range: &[u64]) -> u64 {
+    let (min, max) = range.iter().minmax().into_option().unwrap();
+    min + max
 }
