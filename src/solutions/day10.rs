@@ -78,3 +78,62 @@ fn arrangements(run_length: u64, memo: &mut Vec<u64>) -> u64 {
     memo[run_length as usize] = result;
     result
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    const EXAMPLE1: &str = "16
+10
+15
+5
+1
+11
+7
+19
+6
+12
+4";
+    const EXAMPLE2: &str = "28
+33
+18
+42
+31
+14
+46
+20
+48
+47
+24
+23
+49
+45
+19
+38
+39
+11
+1
+32
+25
+35
+8
+17
+7
+9
+4
+2
+34
+10
+3";
+
+    #[test]
+    fn part_1_test() {
+        assert_eq!(part_1(&generator(EXAMPLE1).unwrap()), 35);
+        assert_eq!(part_1(&generator(EXAMPLE2).unwrap()), 220);
+    }
+
+    #[test]
+    fn part_2_test() {
+        assert_eq!(part_2(&generator(EXAMPLE1).unwrap()), 8);
+        assert_eq!(part_2(&generator(EXAMPLE2).unwrap()), 19208);
+    }
+}
