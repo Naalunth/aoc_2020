@@ -25,7 +25,7 @@ pub fn part_1(input: &PartInput) -> u64 {
         match joltage - last {
             1 => count_1 += 1,
             3 => count_3 += 1,
-            _ => {}
+            _ => unreachable!(),
         }
 
         last = joltage;
@@ -41,7 +41,7 @@ pub fn part_2(input: &PartInput) -> u64 {
     let mut last = 0;
     let mut current_run = 0u64;
 
-    let mut memo = vec![1, 1, 2, 4, 7];
+    let mut memo = Vec::new();
     let mut combinations = 1;
 
     for joltage in adapters.into_iter().chain(once(laptop)) {
@@ -51,8 +51,9 @@ pub fn part_2(input: &PartInput) -> u64 {
                 combinations *= arrangements(current_run, &mut memo);
                 current_run = 0
             }
-            _ => {}
+            _ => unreachable!(),
         }
+
         last = joltage;
     }
 
@@ -73,8 +74,7 @@ fn arrangements(run_length: u64, memo: &mut Vec<u64>) -> u64 {
         }
     };
 
-    memo.push(result);
-    memo.resize((run_length + 1) as usize, 0);
+    memo.resize((run_length + 1) as usize, 1);
     memo[run_length as usize] = result;
     result
 }
