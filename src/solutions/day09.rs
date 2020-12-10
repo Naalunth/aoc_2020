@@ -16,8 +16,12 @@ pub fn generator(input: &str) -> anyhow::Result<GeneratorOutput> {
 
 #[aoc(day9, part1)]
 pub fn part_1(input: &PartInput) -> u64 {
-    for (idx, &number) in input.iter().enumerate().skip(25) {
-        if !is_sum_of_two(number, &input[(idx - 25)..idx]) {
+    part_1_inner(input, 25)
+}
+
+fn part_1_inner(input: &[u64], preamble_length: usize) -> u64 {
+    for (idx, &number) in input.iter().enumerate().skip(preamble_length) {
+        if !is_sum_of_two(number, &input[(idx - preamble_length)..idx]) {
             return number;
         }
     }
@@ -97,4 +101,35 @@ fn is_sum_of_two(number: u64, others: &[u64]) -> bool {
 fn min_max_sum(range: &[u64]) -> u64 {
     let (min, max) = range.iter().minmax().into_option().unwrap();
     min + max
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    const EXAMPLE: &'static str = "35
+20
+15
+25
+47
+40
+62
+55
+65
+95
+102
+117
+150
+182
+127
+219
+299
+277
+309
+576";
+
+    #[test]
+    fn part_1_test() {
+        assert_eq!(part_1_inner(&generator(EXAMPLE).unwrap(), 5), 127);
+    }
 }

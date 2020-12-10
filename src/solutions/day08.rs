@@ -106,3 +106,28 @@ fn run_code(input: &[Instruction]) -> RunResult {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    const EXAMPLE: &'static str = "nop +0
+acc +1
+jmp +4
+acc +3
+jmp -3
+acc -99
+acc +1
+jmp -4
+acc +6";
+
+    #[test]
+    fn part_1_test() {
+        assert_eq!(part_1(&generator(EXAMPLE).unwrap()), 5);
+    }
+
+    #[test]
+    fn part_2_test() {
+        assert_eq!(part_2(&generator(EXAMPLE).unwrap()), 8);
+    }
+}

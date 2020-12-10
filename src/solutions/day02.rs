@@ -69,3 +69,19 @@ impl PasswordEntry {
 pub fn part_2(input: &PartInput) -> usize {
     input.iter().filter(|&pw| pw.is_valid_2()).count()
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    const RULES: &'static [u8] = b"1-3 a: abcde\n1-3 b: cdefg\n2-9 c: ccccccccc";
+
+    #[test]
+    fn part_1_test() {
+        assert_eq!(part_1(&generator(RULES).unwrap()), 2);
+    }
+
+    #[test]
+    fn part_2_test() {
+        assert_eq!(part_2(&generator(RULES).unwrap()), 1);
+    }
+}

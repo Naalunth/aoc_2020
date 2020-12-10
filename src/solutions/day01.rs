@@ -84,3 +84,42 @@ pub fn part_2_one_pass_less(input: &PartInput) -> u32 {
     }
     unreachable!()
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    const LIST: [u32; 6] = [1721, 979, 366, 299, 675, 1456];
+
+    fn part_1_tests(f: fn(input: &PartInput) -> u32) {
+        assert_eq!(f(&LIST), 514579);
+    }
+
+    #[test]
+    fn part_1() {
+        part_1_tests(super::part_1);
+    }
+
+    #[test]
+    fn part_1_single() {
+        part_1_tests(super::part_1_single);
+    }
+
+    #[test]
+    fn part_1_single_array() {
+        part_1_tests(super::part_1_single_array);
+    }
+
+    fn part_2_tests(f: fn(input: &PartInput) -> u32) {
+        assert_eq!(f(&LIST), 241861950);
+    }
+
+    #[test]
+    fn part_2() {
+        part_2_tests(super::part_2);
+    }
+
+    #[test]
+    fn part_2_one_pass_less() {
+        part_2_tests(super::part_2_one_pass_less);
+    }
+}

@@ -32,3 +32,32 @@ pub fn part_2(input: &str) -> usize {
         })
         .sum()
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    const LIST: &'static str = "abc
+
+a
+b
+c
+
+ab
+ac
+
+a
+a
+a
+a
+
+b";
+
+    #[test]
+    fn part_1_test() {
+        assert_eq!(part_1(LIST), 11);
+    }
+    #[test]
+    fn part_2_test() {
+        assert_eq!(part_2(LIST), 6);
+    }
+}

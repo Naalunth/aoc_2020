@@ -54,3 +54,29 @@ pub fn part_2(input: &PartInput) -> u128 {
         .map(|&(down, right)| count_trees(input, down, right) as u128)
         .product()
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    const MAP: &'static [u8] = b"..##.......
+#...#...#..
+.#....#..#.
+..#.#...#.#
+.#...##..#.
+..#.##.....
+.#.#.#....#
+.#........#
+#.##...#...
+#...##....#
+.#..#...#.#";
+
+    #[test]
+    fn part_1_test() {
+        assert_eq!(part_1(&generator(MAP).unwrap()), 7);
+    }
+
+    #[test]
+    fn part_2_test() {
+        assert_eq!(part_2(&generator(MAP).unwrap()), 336);
+    }
+}
