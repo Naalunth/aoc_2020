@@ -36,7 +36,7 @@ pub fn part_2(input: &str) -> usize {
 #[cfg(test)]
 mod tests {
     use super::*;
-    const LIST: &'static str = "abc
+    const LIST: &str = "abc
 
 a
 b

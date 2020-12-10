@@ -107,7 +107,7 @@ fn min_max_sum(range: &[u64]) -> u64 {
 mod tests {
     use super::*;
 
-    const EXAMPLE: &'static str = "35
+    const EXAMPLE: &str = "35
 20
 15
 25

@@ -111,7 +111,7 @@ fn run_code(input: &[Instruction]) -> RunResult {
 mod tests {
     use super::*;
 
-    const EXAMPLE: &'static str = "nop +0
+    const EXAMPLE: &str = "nop +0
 acc +1
 jmp +4
 acc +3

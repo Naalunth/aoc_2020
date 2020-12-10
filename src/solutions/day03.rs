@@ -58,7 +58,7 @@ pub fn part_2(input: &PartInput) -> u128 {
 #[cfg(test)]
 mod tests {
     use super::*;
-    const MAP: &'static [u8] = b"..##.......
+    const MAP: &[u8] = b"..##.......
 #...#...#..
 .#....#..#.
 ..#.#...#.#

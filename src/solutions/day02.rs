@@ -73,7 +73,7 @@ pub fn part_2(input: &PartInput) -> usize {
 #[cfg(test)]
 mod tests {
     use super::*;
-    const RULES: &'static [u8] = b"1-3 a: abcde\n1-3 b: cdefg\n2-9 c: ccccccccc";
+    const RULES: &[u8] = b"1-3 a: abcde\n1-3 b: cdefg\n2-9 c: ccccccccc";
 
     #[test]
     fn part_1_test() {
